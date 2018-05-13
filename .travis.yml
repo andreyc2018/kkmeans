@@ -29,4 +29,4 @@ deploy:
   on:
     branch: $TRAVIS_BRANCH
   script:
-  - curl -T yamr-$TRAVIS_BRANCH.$TRAVIS_BUILD_NUMBER-Linux.deb -uandreyc2018:$BINTRAY_API_KEY "https://api.bintray.com/content/andreyc2018/otus-cpp/yamr/$TRAVIS_BRANCH.$TRAVIS_BUILD_NUMBER/yamr-$TRAVIS_BRANCH.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
+  - curl -T kkmeans-$TRAVIS_BRANCH.$TRAVIS_BUILD_NUMBER-Linux.deb -uandreyc2018:$BINTRAY_API_KEY "https://api.bintray.com/content/andreyc2018/otus-cpp/kkmeans/$TRAVIS_BRANCH.$TRAVIS_BUILD_NUMBER/kkmeans-$TRAVIS_BRANCH.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
