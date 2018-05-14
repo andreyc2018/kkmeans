@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(CMAKE_CXX_STANDARD 15)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -11,7 +11,7 @@ else()
     set(BUILD_NUM 99)
 endif()
 
-set(homework_VERSION_MAJOR 14)
+set(homework_VERSION_MAJOR 15)
 set(homework_VERSION_MINOR 0)
 set(homework_VERSION_BUILD ${BUILD_NUM})
 
@@ -31,7 +31,8 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}
 set(HEADER_FILES
         include/logger.h)
 
-add_library(
+add_library(kkmeans_tools
+        src/logger.cpp
         ${HEADER_FILES})
 
 add_executable(kkmeans
@@ -42,12 +43,12 @@ add_executable(kkmeans
 add_executable(test_version src/test_version.cpp)
 
 target_compile_options(kkmeans PRIVATE -Wpedantic -Wall -Wextra)
-# target_compile_options(kkmeans_tools PRIVATE -Wpedantic -Wall -Wextra)
+target_compile_options(kkmeans_tools PRIVATE -Wpedantic -Wall -Wextra)
 target_compile_options(test_version PRIVATE -Wpedantic -Wall -Wextra)
 
-target_link_libraries(kkmeans
+target_link_libraries(kkmeans kkmeans_tools
         Threads::Threads)
-target_link_libraries(test_version gmock_main
+target_link_libraries(test_version kkmeans_tools gmock_main
         Threads::Threads)
 
 install(TARGETS kkmeans RUNTIME DESTINATION bin)
@@ -93,10 +94,8 @@ if (DOXYGEN_FOUND)
 
     # request to configure the file
     configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/docs/README.md
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/README.md
             ${CMAKE_CURRENT_BINARY_DIR}/docs/README.md COPYONLY)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/docs/hw_assignment.md
-            ${CMAKE_CURRENT_BINARY_DIR}/docs/hw_assignment.md COPYONLY)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/docs/_config.yml
             ${CMAKE_CURRENT_BINARY_DIR}/docs/_config.yml COPYONLY)
 
