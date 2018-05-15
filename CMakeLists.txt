@@ -26,7 +26,8 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${CMAKE_CURRENT_SOURCE_DIR}/googletest/googletest/include
         ${CMAKE_CURRENT_SOURCE_DIR}/googletest/googlemock/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/spdlog/include)
+        ${CMAKE_CURRENT_SOURCE_DIR}/spdlog/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/FunctionalPlus/include)
 
 set(HEADER_FILES
         include/logger.h)
@@ -42,9 +43,12 @@ add_executable(kkmeans
 
 add_executable(test_version src/test_version.cpp)
 
+add_executable(data_generator src/data_generator.cpp)
+
 target_compile_options(kkmeans PRIVATE -Wpedantic -Wall -Wextra)
 target_compile_options(kkmeans_tools PRIVATE -Wpedantic -Wall -Wextra)
 target_compile_options(test_version PRIVATE -Wpedantic -Wall -Wextra)
+target_compile_options(data_generator PRIVATE -Wpedantic -Wall -Wextra)
 
 target_link_libraries(kkmeans kkmeans_tools
         Threads::Threads)
