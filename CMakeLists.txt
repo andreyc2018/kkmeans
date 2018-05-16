@@ -19,8 +19,10 @@ project(kkmeans VERSION
         ${homework_VERSION_MAJOR}.${homework_VERSION_MINOR}.${homework_VERSION_BUILD})
 
 find_package(Threads REQUIRED)
-set(dlib_LIBS /usr/lib64/libdlib.so)
-set(openblas_LIBS /usr/lib64/libopenblas64.a)
+#set(dlib_LIBS /usr/lib64/libdlib.so)
+set(dlib_LIBS /usr/lib/libdlib.so)
+#set(openblas_LIBS /usr/lib64/libopenblas64.a)
+set(openblas_LIBS /usr/lib/libopenblas64.a)
 #find_package(dlib REQUIRED)
 
 configure_file(version.h.in version.h)
