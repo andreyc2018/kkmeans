@@ -8,7 +8,7 @@ int main(int argc, char** argv)
     const std::string app =
         std::string(argv[0]).substr(std::string(argv[0]).rfind("/") + 1);
     if (argc < 2) {
-        std::cout << "usage: " << app << " <n> <items> <min> <max>\n"
+        std::cerr << "usage: " << app << " <n> <items> <min> <max>\n"
                         "where:\n"
                         "  n - number of clusters\n";
         exit(1);
@@ -19,7 +19,7 @@ int main(int argc, char** argv)
     int min = (argc > 3)? std::stoi(argv[3]) : -100;
     int max = (argc > 4)? std::stoi(argv[4]) : 100;
 
-    std::cout << "Starting " << app << " will generate " << items 
+    std::cerr << "Starting " << app << " will generate " << items
               << " points between " << min << " and " << max
               << " in " << n << " clusters.\n";
 
@@ -31,7 +31,7 @@ int main(int argc, char** argv)
         std::default_random_engine e1(r());
         std::uniform_int_distribution<int> uniform_dist(min, max);
         int mean = uniform_dist(e1);
-        std::cout << "Randomly-chosen mean: " << mean << '\n';
+        std::cerr << "Randomly-chosen mean: " << mean << '\n';
 
         // Generate a distribution around that mean
         std::seed_seq seed2{r(), r(), r(), r(), r(), r(), r(), r()}; 
@@ -41,7 +41,7 @@ int main(int argc, char** argv)
         for (int j = 0; j < items; ++j) {
             auto x = normal_dist(e2);
             auto y = normal_dist(e2);
-            std::cerr << std::fixed << std::setprecision(2)
+            std::cout << std::fixed << std::setprecision(2)
                       << x << ";" << y << "\n";
         }
     }
