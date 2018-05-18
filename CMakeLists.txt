@@ -20,14 +20,6 @@ project(kkmeans VERSION
 
 find_package(Threads REQUIRED)
 
-if(EXISTS "/usr/lib64/libdlib.so")
-    set(dlib_LIBS /usr/lib64/libdlib.so)
-    set(openblas_LIBS /usr/lib64/libopenblas64.a)
-else()
-    set(dlib_LIBS /usr/lib/libdlib.so)
-    set(openblas_LIBS /usr/lib/libopenblas.a)
-endif()
-
 configure_file(version.h.in version.h)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}
@@ -59,9 +51,9 @@ target_compile_options(test_version PRIVATE -Wpedantic -Wall -Wextra)
 target_compile_options(data_generator PRIVATE -Wpedantic -Wall -Wextra)
 
 target_link_libraries(kkmeans kkmeans_tools
-        Threads::Threads ${dlib_LIBS} ${openblas_LIBS})
+        Threads::Threads ${dlib_LIBS} ${blas_LIBS})
 target_link_libraries(test_version kkmeans_tools gmock_main
-        Threads::Threads ${dlib_LIBS} ${openblas_LIBS})
+        Threads::Threads ${dlib_LIBS} ${blas_LIBS})
 
 install(TARGETS kkmeans RUNTIME DESTINATION bin)
 
@@ -80,6 +72,19 @@ add_test(NAME test_kkmeans COMMAND test_version)
 
 if(EXISTS ${CMAKE_SOURCE_DIR}/sandbox/CMakeLists.txt)
     add_subdirectory(sandbox EXCLUDE_FROM_ALL)
+endif()
+
+if(EXISTS ${CMAKE_SOURCE_DIR}/dlib/CMakeLists.txt)
+    # Replace install() to do-nothing macro.
+    macro(install)
+    endmacro()
+    # Include subproject (or any other CMake code) with "disabled" install().
+    message(STATUS "Adding dlib framework.")
+    add_subdirectory(googletest)
+    # Restore original install() behavior.
+    macro(install)
+        _install(${ARGN})
+    endmacro()
 endif()
 
 if(EXISTS ${CMAKE_SOURCE_DIR}/googletest/CMakeLists.txt)

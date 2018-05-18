@@ -7,3 +7,6 @@
 [submodule "FunctionalPlus"]
 	path = FunctionalPlus
 	url = https://github.com/Dobiasd/FunctionalPlus.git
+[submodule "dlib"]
+	path = dlib
+	url = https://github.com/davisking/dlib.git
