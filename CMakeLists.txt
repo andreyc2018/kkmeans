@@ -20,6 +20,14 @@ project(kkmeans VERSION
 
 find_package(Threads REQUIRED)
 
+if(EXISTS "/usr/lib64/libdlib.so")
+    set(dlib_LIBS /usr/lib64/libdlib.so)
+    set(blas_LIBS /usr/lib64/libopenblas.so)
+else()
+    set(dlib_LIBS /usr/lib/libdlib.so)
+    set(blas_LIBS /usr/lib/libopenblas.so)
+endif()
+
 configure_file(version.h.in version.h)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}
@@ -74,18 +82,18 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/sandbox/CMakeLists.txt)
     add_subdirectory(sandbox EXCLUDE_FROM_ALL)
 endif()
 
-if(EXISTS ${CMAKE_SOURCE_DIR}/dlib/CMakeLists.txt)
-    # Replace install() to do-nothing macro.
-    macro(install)
-    endmacro()
-    # Include subproject (or any other CMake code) with "disabled" install().
-    message(STATUS "Adding dlib framework.")
-    add_subdirectory(googletest)
-    # Restore original install() behavior.
-    macro(install)
-        _install(${ARGN})
-    endmacro()
-endif()
+#if(EXISTS ${CMAKE_SOURCE_DIR}/dlib/CMakeLists.txt)
+#    # Replace install() to do-nothing macro.
+#    macro(install)
+#    endmacro()
+#    # Include subproject (or any other CMake code) with "disabled" install().
+#    message(STATUS "Adding dlib framework.")
+#    add_subdirectory(googletest)
+#    # Restore original install() behavior.
+#    macro(install)
+#        _install(${ARGN})
+#    endmacro()
+#endif()
 
 if(EXISTS ${CMAKE_SOURCE_DIR}/googletest/CMakeLists.txt)
     # Replace install() to do-nothing macro.

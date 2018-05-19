@@ -1,5 +1,5 @@
 #include "logger.h"
-#include <fplus/fplus.hpp>
+//#include <fplus/fplus.hpp>
 #include <dlib/clustering.h>
 #include <iostream>
 
@@ -28,15 +28,16 @@ int main(int argc, char const** argv)
             std::istreambuf_iterator<char>(std::cin.rdbuf()),
             std::istreambuf_iterator<char>());
 
-        const auto parts = fplus::split_lines(false, input);
         std::vector<sample_type_t> samples;
-        for (const auto& p : parts) {
-            const auto coords = fplus::split(';', false, p);
-            sample_type_t m;
-            m(0) = std::stod(coords[0]);
-            m(1) = std::stod(coords[1]);
-            samples.push_back(m);
-        }
+
+//        const auto parts = fplus::split_lines(false, input);
+//        for (const auto& p : parts) {
+//            const auto coords = fplus::split(';', false, p);
+//            sample_type_t m;
+//            m(0) = std::stod(coords[0]);
+//            m(1) = std::stod(coords[1]);
+//            samples.push_back(m);
+//        }
 
         dlib::kcentroid<kernel_type_t> kc(kernel_type_t(0.1),0.01, 8);
         dlib::kkmeans<kernel_type_t> test(kc);
